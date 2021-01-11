@@ -19,19 +19,18 @@ function App() {
 
   const handleSearchInput = e => {
     setSearch(e.target.value);
-    console.log(search);
   }
 
   const getSearch = e => {
     e.preventDefault();
     const matchedProfile = [];
-    console.log(search, typeof search)
     profiles.filter(profile => {
       if (profile.FirstName === search)
         matchedProfile.push(profile);
       return matchedProfile
     });
     setProfiles(matchedProfile);
+    setSearch('');
   }
   return (
     <div className="App">
