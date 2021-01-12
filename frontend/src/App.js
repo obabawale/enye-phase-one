@@ -1,25 +1,33 @@
 import { useEffect, useState } from 'react';
-import Profile from './Profile';
-import './App.css';
+import Profiles from './components/Profiles';
+import Pagination from './components/Pagination';
 
 function App() {
-
   const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [profilesPerPage] = useState(20);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
+    const getProfiles = async () => {
+      setLoading(true);
+      const response = await fetch("https://api.enye.tech/v1/challenge/records");
+      const data = await response.json();
+      setProfiles(data.records.profiles);
+      setLoading(false);
+    }
     getProfiles();
   }, []);
 
-  const getProfiles = async () => {
-    const response = await fetch("http://api.enye.tech/v1/challenge/records");
-    const data = await response.json();
-    setProfiles(data.records.profiles);
-  }
+  // Get current posts
+  const indexofLastProfile = currentPage * profilesPerPage;
+  const indexofFirstProfile = indexofLastProfile - profilesPerPage;
+  const currentProfiles = profiles.splice(indexofFirstProfile, indexofLastProfile);
 
-  const handleSearchInput = e => {
-    setSearch(e.target.value);
-  }
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleSearchInput = e => setSearch(e.target.value);
 
   const getSearch = e => {
     e.preventDefault();
@@ -32,15 +40,16 @@ function App() {
     setProfiles(matchedProfile);
     setSearch('');
   }
+  
   return (
     <div className="App">
+      <h1 className="text-primary mb-5">Profiles</h1>
       <form onSubmit={getSearch}>
         <input type="text" name="search" className="patientSearch" value={search} onChange={handleSearchInput}/>
         <button type="text" name="search-button" className="patientSubmit">Search</button>
       </form>
-      {profiles.map(profile => (
-        <Profile key={profile.FirstName} profile={profile}/>
-      ))}
+      <Profiles profiles={currentProfiles} loading={loading} />
+      <Pagination profilesPerPage={profilesPerPage} totalProfiles={profiles.length} paginate={paginate} />
     </div>
   );
 }
