@@ -19,7 +19,6 @@ router.get('/rates', (req, res) => {
     let results = {}
     let rates = {};
     getRate(base=base,currency=currencies).then(data => {
-        console.log("api data", data);
         results.base = data.base;
         results.date = data.date;
         for (let currency of currency_array){
