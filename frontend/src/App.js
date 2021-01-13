@@ -29,25 +29,10 @@ function App() {
 
   const handleSearchInput = e => setSearch(e.target.value);
 
-  const getSearch = e => {
-    e.preventDefault();
-    const matchedProfile = [];
-    profiles.filter(profile => {
-      if (profile.FirstName === search)
-        matchedProfile.push(profile);
-      return matchedProfile
-    });
-    setProfiles(matchedProfile);
-    setSearch('');
-  }
-  
   return (
     <div className="App">
       <h1 className="text-primary mb-5">Profiles</h1>
-      <form onSubmit={getSearch}>
-        <input type="text" name="search" className="patientSearch" value={search} onChange={handleSearchInput}/>
-        <button type="text" name="search-button" className="patientSubmit">Search</button>
-      </form>
+      <input type="text" name="search" className="patientSearch" value={search} onChange={handleSearchInput} />
       <Profiles profiles={currentProfiles} loading={loading} />
       <Pagination profilesPerPage={profilesPerPage} totalProfiles={profiles.length} paginate={paginate} />
     </div>

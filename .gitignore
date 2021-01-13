@@ -8,6 +8,7 @@
 /frontend/debug.log
 /.pnp
 .pnp.js
+frontend/.eslintcache
 
 # testing
 /coverage

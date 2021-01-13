@@ -5,7 +5,7 @@ const Profiles = ({ profiles, loading }) => {
     return(
         <ul className="list-group mb4">   
             {profiles.map(profile => (
-                <li key={profile.CreditCardNumber} className="list-group-item">{profile.FirstName}</li>
+                <li key={profile.CreditCardNumber} className="list-group-item">{profile.FirstName} {profile.LastName}</li>
             ))}
         </ul>
     )
