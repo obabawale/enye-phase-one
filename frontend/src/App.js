@@ -23,7 +23,7 @@ function App() {
   // Get current posts
   const indexofLastProfile = currentPage * profilesPerPage;
   const indexofFirstProfile = indexofLastProfile - profilesPerPage;
-  const currentProfiles = profiles.splice(indexofFirstProfile, indexofLastProfile);
+  const currentProfiles = profiles.slice(indexofFirstProfile, indexofLastProfile);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
